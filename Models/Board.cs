@@ -1,10 +1,10 @@
 public class Board
 {
-    public List<List<int?>> Fiele { get; set; }
+    public List<List<int?>> Field { get; set; }
 
     public Board()
     {
-        Fiele = NewBoard();
+        Field = NewBoard();
     }
 
     public void PrintBoard()
@@ -12,7 +12,7 @@ public class Board
         String output = "";
         for (int i = 0; i < FieldSize.x; i++)
         {
-            List<int?> row = Fiele[i];
+            List<int?> row = Field[i];
 
             for (int j = 0; j < FieldSize.y; j++)
             {
@@ -25,17 +25,42 @@ public class Board
                     else
                         output += " | ";
             }
-            if (i < Fiele.Count - 1 && i % 3 == 2)
+            if (i < Field.Count - 1 && i % 3 == 2)
                 output += $"\n{new String('-', 11)}  {new String('-', 13)}  {new String('-', 11)}    ";
             output += new String(' ', FieldSize.y * i) + "\n";
         }
         Console.WriteLine(output);
     }
 
-    public void FillBoard(List<List<int?>>? preset = null)
+    public void PrintAsArrayTemplate()
+    {
+        String output = "new[] { \n";
+
+        foreach (var item in Field)
+        {
+            output += " \t new int[] {";
+            output += String.Join(",", item);
+            output += "}, \n";
+        }
+        output += "};";
+
+        Console.WriteLine(output);
+    }
+
+    public void FillBoard(int[][]? preset = null)
     {
         if (preset is not null)
-            Fiele = preset;
+        {
+            Field = new();
+            foreach (var row in preset)
+            {
+                Field.Add(new List<int?>());
+                foreach (var value in row)
+                {
+                    Field!.LastOrDefault()!.Add(value);
+                }
+            }
+        }
         else
         {
             List<List<int?>>? newField = new();
@@ -47,7 +72,7 @@ public class Board
                     newField[i].Add(new Random().Next(1, 10));
                 }
             }
-            Fiele = newField;
+            Field = newField;
         }
     }
 
