@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public class Checker
 {
     public static bool Check(string value, bool strict = false)
@@ -24,19 +26,21 @@ public class Checker
 
     public bool IsValid()
     {
-        bool isvalid = true;
+        var checkWatch = Stopwatch.StartNew();
+        int errorCounter = 0;
+
         for (int i = 0; i < FieldSize.y; i++)
         {
             if (!CheckRow(i))
             {
                 Console.WriteLine($"Row: {i + 1} -> is wrong \n");
-                isvalid = false;
+                errorCounter++;
             }
 
             if (!CheckColumn(i))
             {
                 Console.WriteLine($"Column: {i + 1} -> is wrong \n");
-                isvalid = false;
+                errorCounter++;
             }
         }
 
@@ -47,14 +51,22 @@ public class Checker
                 if (!CheckBox(i, j))
                 {
                     Console.WriteLine($"Box: {i + 1}, {j + 1} -> is wrong \n");
-                    isvalid = false;
+                    errorCounter++;
                 }
             }
         }
 
-        if (isvalid)
-            Console.WriteLine("No Errors 🥳");
-        return isvalid;
+        Console.WriteLine($"Check needed {checkWatch.ElapsedMilliseconds}ms to execute");
+        if (errorCounter == 0)
+        {
+            Console.WriteLine($"🥳 No Errors");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine($"❌ There are {errorCounter} Errors");
+            return false;
+        }
     }
 
     private bool CheckBox(int i, int j)

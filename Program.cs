@@ -1,15 +1,25 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+string boardTemplate = @"{""Field"": [
+			[4, null, 5, null, 6, null, 7, null, null],
+			[6, null, 2, null, null, null, null, 9, 3],
+			[1, 9, 7, null, 3, null, null, 6, 2],
+			[null, null, null, null, 9, null, 3, null, 7],
+			[null, null, null, 6, 8, null, 9, 1, 5],
+			[9, null, 1, null, 4, 3, null, 2, null],
+			[5, 1, null, 3, 2, null, 8, null, 4],
+			[null, 4, 8, null, null, 7, 1, null, 6],
+			[7, null, 3, null, 1, null, null, 5, null]
+		]}";
 
-using System.Diagnostics;
-
-int[][] boardTemplate = Templates.EveryFirstCorrect;
-
+// Generate and Fill board
 Board board = new();
 board.FillBoard(boardTemplate);
 board.PrintBoard();
 
+// Solve board
+Solver solver = new(board);
+board = solver.SolveBoard();
+
 Checker checker = new(board);
 
-var checkWatch = Stopwatch.StartNew();
 checker.IsValid();
-Console.WriteLine($"Check needed {checkWatch.ElapsedMilliseconds}ms to execute");

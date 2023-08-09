@@ -9,7 +9,7 @@ public class Box
             _SubField.Add(new List<int?>());
             for (int j = boxPosY * 3; j < (boxPosY * 3) + 3; j++)
             {
-                _SubField[i % 3].Add(board.Field[i][j]);
+                _SubField[i % 3].Add(board.Field.Field[i][j]);
             }
         }
         // PrintBox();
@@ -40,7 +40,11 @@ public class Box
             {
                 int? col = row[j];
 
-                output += col;
+                if (col is null)
+                    output += " ";
+                else
+                    output += col;
+
                 if (j < row.Count - 1)
                     output += " | ";
             }
@@ -48,5 +52,30 @@ public class Box
                 output += new String(' ', FieldSize.y * i) + "\n";
         }
         Console.WriteLine(output);
+    }
+
+    public List<int?> GetList()
+    {
+        List<int?> list = new();
+        foreach (List<int?> row in _SubField)
+        {
+            foreach (int? col in row)
+            {
+                list.Add(col);
+            }
+        }
+
+        return list;
+    }
+
+    public bool Contains(int number)
+    {
+        foreach (List<int?> row in _SubField)
+        {
+            if (row.Contains(number))
+                return true;
+        }
+
+        return false;
     }
 }

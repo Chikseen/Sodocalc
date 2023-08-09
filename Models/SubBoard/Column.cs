@@ -6,7 +6,7 @@ public class Column
     {
         for (int i = 0; i < FieldSize.y; i++)
         {
-            _SubColumn.Add(board.Field[i][y]);
+            _SubColumn.Add(board.Field.Field[i][y]);
         }
     }
 
@@ -21,5 +21,15 @@ public class Column
     public void PrintColumn()
     {
         Console.WriteLine(String.Join(",", _SubColumn));
+    }
+
+    public List<int?> GetList()
+    {
+        return _SubColumn;
+    }
+
+    public bool Contains(int number)
+    {
+        return _SubColumn.Contains(number);
     }
 }

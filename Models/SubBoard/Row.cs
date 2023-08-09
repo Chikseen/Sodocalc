@@ -4,7 +4,7 @@ public class Row
 
     public Row(Board board, int y)
     {
-        _SubRow = board.Field[y]; ;
+        _SubRow = board.Field.Field[y]; ;
     }
 
     public bool IsValid()
@@ -18,5 +18,15 @@ public class Row
     public void PrintRow()
     {
         Console.WriteLine(String.Join(",", _SubRow));
+    }
+
+    public List<int?> GetList()
+    {
+        return _SubRow;
+    }
+
+    public bool Contains(int number)
+    {
+        return _SubRow.Contains(number);
     }
 }
